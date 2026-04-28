@@ -38,6 +38,10 @@ func healthzHandler(w http.ResponseWriter, _ *http.Request) {
 
 func sumHandler(w http.ResponseWriter, r *http.Request) {
 	raw := r.URL.Query().Get("numbers")
+	if strings.TrimSpace(raw) == "" {
+		writeJSON(w, http.StatusBadRequest, errorResponse{Error: "numbers query parameter is required"})
+		return
+	}
 	parts := strings.Split(raw, ",")
 	nums := make([]int, 0, len(parts))
 	for _, p := range parts {
