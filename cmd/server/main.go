@@ -22,6 +22,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/healthz", healthzHandler)
 	mux.HandleFunc("/sum", sumHandler)
+	mux.HandleFunc("/multiply", multiplyHandler)
 
 	addr := ":8080"
 	log.Printf("server listening on %s", addr)
@@ -58,6 +59,21 @@ func sumHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	writeJSON(w, http.StatusOK, sumResponse{Total: total})
+}
+
+func multiplyHandler(w http.ResponseWriter, r *http.Request) {
+	query := r.URL.Query()
+	xStr := query.Get("x")
+	yStr := query.Get("y")
+
+	x, errX := strconv.Atoi(strings.TrimSpace(xStr))
+	y, errY := strconv.Atoi(strings.TrimSpace(yStr))
+	if errX != nil || errY != nil {
+		writeJSON(w, http.StatusBadRequest, errorResponse{Error: "x and y must be integers"})
+		return
+	}
+
+	writeJSON(w, http.StatusOK, sumResponse{Total: calc.Multi(x, y)})
 }
 
 func writeJSON(w http.ResponseWriter, statusCode int, body any) {

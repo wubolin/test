@@ -1,5 +1,7 @@
 # test
 
+[![CI](https://github.com/clever-vpn/test/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/clever-vpn/test/actions/workflows/ci.yml)
+
 A small Go project for learning a GitHub-based development workflow.
 
 ## Project layout
@@ -27,3 +29,6 @@ Expected response:
 ## Learning guide
 
 Follow `CONTRIBUTING.md` and `docs/WORKFLOW_TRAINING.md` for full PR and issue practice.
+
+test1
+test2
